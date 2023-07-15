@@ -11,9 +11,7 @@ namespace Movies_Store
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            //        builder.Services.AddDbContext<HRContext>(options =>
-            //     options.UseSqlServer(builder.Configuration.GetConnectionString("cs"))
-            //);
+          
             builder.Services.AddDbContext<CinemaContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnectionString")));
             var app = builder.Build();
 
