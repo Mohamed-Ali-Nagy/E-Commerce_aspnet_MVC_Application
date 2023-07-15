@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Movies_Store.Data;
+
 namespace Movies_Store
 {
     public class Program
@@ -8,7 +11,10 @@ namespace Movies_Store
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            //        builder.Services.AddDbContext<HRContext>(options =>
+            //     options.UseSqlServer(builder.Configuration.GetConnectionString("cs"))
+            //);
+            builder.Services.AddDbContext<CinemaContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnectionString")));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -29,6 +35,9 @@ namespace Movies_Store
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            AppDbInitializer.seed(app);
+
 
             app.Run();
         }
