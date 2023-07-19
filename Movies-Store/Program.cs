@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Movies_Store.Data;
+using Movies_Store.Data.Services;
 
 namespace Movies_Store
 {
@@ -13,6 +14,7 @@ namespace Movies_Store
             builder.Services.AddControllersWithViews();
           
             builder.Services.AddDbContext<CinemaContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnectionString")));
+            builder.Services.AddScoped<IActorService,ActorService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

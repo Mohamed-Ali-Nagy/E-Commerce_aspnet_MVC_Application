@@ -1,0 +1,43 @@
+﻿@model List<Actor>
+@{
+    ViewData["Title"] = "Actors";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <table class="table">
+            <thead>
+                <tr >
+                   <th>Profile Picture</th>
+                   <th>Name</th>
+                   <th>Biography</th>
+                   <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var actor in Model)
+                {
+                    <tr>
+                        <td class="align-middle">
+                            <img class="rounded-circle" src="@actor.ImageUrl" alt="@actor.Name" style="max-width: 150px" />
+                        </td>
+                        <td>
+                            @actor.Name
+                        </td>
+                        <td>
+                            @actor.Bio
+                        </td>
+                        <td>
+                           <a asp-action="Details" asp-route-Id="@actor.Id" class="btn btn-outline-info"><i class="bi bi-eye"></i>Details</a>
+                            <a asp-action="Edit" asp-route-Id="@actor.Id" class="btn btn-outline-info "><i class="bi bi-pencil-square"></i>Edit</a>
+                           <a asp-action="Delete" asp-route-Id="@actor.Id" class="btn btn-danger"><i class="bi bi-trash"></i>Delete</a>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
