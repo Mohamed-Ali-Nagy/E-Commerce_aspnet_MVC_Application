@@ -15,6 +15,8 @@ namespace Movies_Store
           
             builder.Services.AddDbContext<CinemaContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnectionString")));
             builder.Services.AddScoped<IActorService,ActorService>();
+            builder.Services.AddScoped<IProducerService,ProducerServices>();
+            builder.Services.AddScoped<ICinemaService,CinemaService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

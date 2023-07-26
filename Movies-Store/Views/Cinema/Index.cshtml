@@ -1,0 +1,46 @@
+﻿@model List<Cinema>
+@{
+    ViewData["Title"] = "All Cinema";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Logo</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="align-middle">
+                            <img class="rounded-circle" src="@item.Logo" alt="@item.Name" style="max-width: 150px" />
+                        </td>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td>
+                            @item.Description
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-Id="@item.Id" class="btn btn-outline-info"><i class="bi bi-eye"></i>Details</a>
+                            <a asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-outline-info "><i class="bi bi-pencil-square"></i>Edit</a>
+                            <a asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-danger"><i class="bi bi-trash"></i>Delete</a>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+@await Html.PartialAsync("_AddItem", "cinema")
+
+
+

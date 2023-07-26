@@ -1,6 +1,8 @@
-﻿namespace Movies_Store.Models
+﻿using Movies_Store.Data.Base;
+
+namespace Movies_Store.Models
 {
-    public class Cinema
+    public class Cinema:IEntityBase
     {
         public int Id { get; set; }
         public string Name { get; set; }
