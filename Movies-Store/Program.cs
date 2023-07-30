@@ -17,6 +17,7 @@ namespace Movies_Store
             builder.Services.AddScoped<IActorService,ActorService>();
             builder.Services.AddScoped<IProducerService,ProducerServices>();
             builder.Services.AddScoped<ICinemaService,CinemaService>();
+            builder.Services.AddScoped<IMovieService,MovieService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

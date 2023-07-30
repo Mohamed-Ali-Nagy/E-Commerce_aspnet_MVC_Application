@@ -51,10 +51,10 @@
                         <input name="searchString" type="text" class="form-control" placeholder="Search for a movie..." aria-label="Recipient's username" aria-describedby="button-addon2">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
                     </form>*@
-                    <form class="d-flex" role="search">
+                    <form class="d-flex" role="search" asp-controller="Movie" asp-action="Filter" >
                         <button class="btn btn-outline-success mx-2" type="submit"><i class="bi bi-search"></i></button>
 
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <input class="form-control me-2" type="search" name="searchValue" placeholder="Search" aria-label="Search">
                     </form>
                 </div>
             </div>
@@ -75,5 +75,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 </body>
 </html>
