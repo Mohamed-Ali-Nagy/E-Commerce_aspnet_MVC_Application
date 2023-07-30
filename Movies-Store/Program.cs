@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Movies_Store.Data;
+using Movies_Store.Data.Cart;
 using Movies_Store.Data.Services;
 
 namespace Movies_Store
@@ -18,6 +19,10 @@ namespace Movies_Store
             builder.Services.AddScoped<IProducerService,ProducerServices>();
             builder.Services.AddScoped<ICinemaService,CinemaService>();
             builder.Services.AddScoped<IMovieService,MovieService>();
+            builder.Services.AddScoped<IOrderService,OrderService>();
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
+            builder.Services.AddSession();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -32,6 +37,7 @@ namespace Movies_Store
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 
