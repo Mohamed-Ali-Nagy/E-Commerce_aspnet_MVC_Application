@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Movies_Store.Models;
 
 namespace Movies_Store.Data
 {
-    public class CinemaContext:DbContext
+    public class CinemaContext:IdentityDbContext<ApplicationUser>
     {
         public CinemaContext(DbContextOptions options) : base(options) { }
         public DbSet<Actor> Actors { get; set; }

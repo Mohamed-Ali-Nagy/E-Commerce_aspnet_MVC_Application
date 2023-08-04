@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Movies_Store.Data;
 using Movies_Store.Data.Cart;
 using Movies_Store.Data.Services;
+using Movies_Store.Models;
 
 namespace Movies_Store
 {
@@ -23,6 +25,7 @@ namespace Movies_Store
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
             builder.Services.AddSession();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<CinemaContext>().AddDefaultTokenProviders();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -46,6 +49,7 @@ namespace Movies_Store
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             AppDbInitializer.seed(app);
+            AppDbInitializer.seedUserAndRoleAsync(app);
 
 
             app.Run();

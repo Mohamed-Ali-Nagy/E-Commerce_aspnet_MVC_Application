@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Movies_Store.Data.Enums;
 using Movies_Store.Models;
 using System;
@@ -91,7 +92,7 @@ namespace Movies_Store.Data
                     context.SaveChanges();
                 }
 
-                if(!context.Producers.Any()) 
+                if (!context.Producers.Any())
                 {
                     context.Producers.AddRange(new List<Producer>()
                     {
@@ -309,6 +310,55 @@ namespace Movies_Store.Data
                         },
                     });
                     context.SaveChanges();
+                }
+            }
+        }
+
+        public static async Task seedUserAndRoleAsync(IApplicationBuilder applicationBuilder)
+        {
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+            {
+                var userManager=serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                var roleManager=serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                if (!await roleManager.RoleExistsAsync("Admin"))
+                {
+                    await roleManager.CreateAsync(new IdentityRole("Admin"));
+                }
+
+                if (!await roleManager.RoleExistsAsync("User"))
+                {
+                    await roleManager.CreateAsync(new IdentityRole("User"));
+                }
+
+                string adminUserEmail = "admin@eticket.com";
+                var adminUser=await userManager.FindByEmailAsync(adminUserEmail);
+                if(adminUser == null)
+                {
+                    adminUser = new ApplicationUser()
+                    {
+                        FullName= "admin user",
+                        UserName = "admin-user",
+                        Email = adminUserEmail,
+                        EmailConfirmed = true,
+                    };
+                    await userManager.CreateAsync(adminUser,"P@ssword1");
+                    await userManager.AddToRoleAsync(adminUser, "Admin");
+                }
+
+                string appUserEmail = "user@eticket.com";
+                var appUser = await userManager.FindByEmailAsync(appUserEmail);
+                if (appUser == null)
+                {
+                    appUser = new ApplicationUser()
+                    {
+                        FullName = "app user",
+                        UserName = "app-user",
+                        Email = appUserEmail,
+                        EmailConfirmed = true,
+                    };
+                    await userManager.CreateAsync(appUser, "P@ssword1");
+                    await userManager.AddToRoleAsync(appUser, "User");
                 }
             }
         }
