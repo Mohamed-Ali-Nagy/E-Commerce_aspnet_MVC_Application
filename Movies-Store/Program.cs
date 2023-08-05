@@ -46,7 +46,7 @@ namespace Movies_Store
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Movie}/{action=Index}/{id?}");
 
             AppDbInitializer.seed(app);
             AppDbInitializer.seedUserAndRoleAsync(app);

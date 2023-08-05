@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Movies_Store.Data;
 using Movies_Store.Data.ViewModels;
 using Movies_Store.Models;
 
@@ -9,14 +11,21 @@ namespace Movies_Store.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
-        public AccountController(UserManager<ApplicationUser> _userManager,SignInManager<ApplicationUser> _signInManager)
+        private readonly CinemaContext cinemaContext;
+        public AccountController( CinemaContext _cinemaContext,UserManager<ApplicationUser> _userManager,SignInManager<ApplicationUser> _signInManager)
         {
             userManager = _userManager;
             signInManager = _signInManager;
+            cinemaContext = _cinemaContext;
         }
         public IActionResult Index()
         {
             return View();
+        }
+        public async Task<IActionResult> Users()
+        {
+           var users= await cinemaContext.Users.ToListAsync();
+            return View(users);
         }
         public IActionResult Login()
         {
@@ -87,6 +96,11 @@ namespace Movies_Store.Controllers
             }
             return View(registerVM);
             
+        }
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction(nameof(Login));
         }
     }
 }

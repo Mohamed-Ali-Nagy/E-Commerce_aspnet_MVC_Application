@@ -29,9 +29,11 @@
                         </td>
                         <td>
                             <a asp-action="Details" asp-route-Id="@item.Id" class="btn btn-outline-info"><i class="bi bi-eye"></i>Details</a>
-                            <a asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-outline-info "><i class="bi bi-pencil-square"></i>Edit</a>
-                            <a asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-danger"><i class="bi bi-trash"></i>Delete</a>
-
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <a asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-outline-info "><i class="bi bi-pencil-square"></i>Edit</a>
+                                <a asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-danger"><i class="bi bi-trash"></i>Delete</a>
+                            }
                         </td>
                     </tr>
                 }
